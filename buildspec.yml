@@ -8,14 +8,9 @@ phases:
     commands:
       - echo "Initializing environment..."
       - echo "Logging in to CodeArtifact..."
-      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
-          --domain ajay-devops \
-          --domain-owner 154993632574 \
-          --region ap-south-1 \
-          --query authorizationToken \
-          --output text)
-      - npm config set //ajay-devops-154993632574.d.codeartifact.ap-south-1.amazonaws.com/npm/express-aws/:_authToken=$CODEARTIFACT_AUTH_TOKEN
-      - npm config set registry=https://ajay-devops-154993632574.d.codeartifact.ap-south-1.amazonaws.com/npm/express-aws/
+      - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ajay-devops --domain-owner 154993632574 --region ap-south-1 --query authorizationToken --output text)
+      - npm config set registry=https://ajay-devops-154993632574.d.codeartifact.ap-south-1.amazonaws.com/npm/npm-store/
+      - npm config set //ajay-devops-154993632574.d.codeartifact.ap-south-1.amazonaws.com/npm/npm-store/:_authToken=$CODEARTIFACT_AUTH_TOKEN
   build:
     commands:
       - echo "Build started on $(date)"
@@ -29,5 +24,5 @@ artifacts:
   files:
     - index.js
     - package*.json
-    - dist/**  # if you have a build output here
+    - dist/**
   discard-paths: no
