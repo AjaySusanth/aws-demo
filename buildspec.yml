@@ -6,8 +6,8 @@ phases:
       nodejs: 18
   pre_build:
     commands:
-      - echo Initializing environment...
-      - echo Logging in to CodeArtifact...
+      - echo "Initializing environment..."
+      - echo "Logging in to CodeArtifact..."
       - export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
           --domain ajay-devops \
           --domain-owner 154993632574 \
@@ -15,18 +15,19 @@ phases:
           --query authorizationToken \
           --output text)
       - npm config set //ajay-devops-154993632574.d.codeartifact.ap-south-1.amazonaws.com/npm/express-aws/:_authToken=$CODEARTIFACT_AUTH_TOKEN
+      - npm config set registry=https://ajay-devops-154993632574.d.codeartifact.ap-south-1.amazonaws.com/npm/express-aws/
   build:
     commands:
-      - echo Build started on `date`
-      - npm install
-      - echo Build completed on `date`
+      - echo "Build started on $(date)"
+      - npm install --no-audit
+      - echo "Build completed on $(date)"
   post_build:
     commands:
-      - echo Build successful!
+      - echo "✅ Build successful!"
 
 artifacts:
   files:
     - index.js
     - package*.json
-    - dist/** 
+    - dist/**  # if you have a build output here
   discard-paths: no
